@@ -8,22 +8,13 @@ This example contains basic functionality like:
 ## Dependency
 
 - [ArduinoJson](https://arduinojson.org)
+- [DHT-Sensor-Library](https://github.com/adafruit/DHT-sensor-library)
 - [StringSplitter](https://github.com/aharshac/StringSplitter)
 - [PubSubClient](https://github.com/knolleary/pubsubclient)
 - [Shifty](https://github.com/johnnyb/Shifty)
 - [GeekyMQTT](https://github.com/Ravi-Pansuriya/GeekyMQTT)
 - [ShiftySwitches](https://github.com/Ravi-Pansuriya/ShiftySwitches)
 - Ticker (ESP32)
-
-## Compatible Hardware
-
-- ESP32
-
-## Thanks to
-
-- Nicholas O'Leary ([PubSubClient](https://github.com/knolleary/pubsubclient))
-- Jonathan Bartlett ([Shifty](https://github.com/johnnyb/Shifty))
-- Harsha Alva ([StringSplitter](https://github.com/aharshac/StringSplitter))
 
 ## License
 
