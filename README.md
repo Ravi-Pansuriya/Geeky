@@ -1,6 +1,6 @@
 # Geeky
 
-[![Geekyworks](https://cldup.com/dTxpPi9lDf.thumb.png)](https://geekyworks.com)
+[![Geekyworks](https://github.com/Ravi-Pansuriya/Geeky/blob/master/Docs/Images/powerd_by.png)](https://geekyworks.com)
 
 Geeky helps you to intigrate devices with Amazon Alexa, Google Home and personalized web panel provided by [Geekyworks](https://iot.geekyworks.com). It's made for hobbyist and enthusiastic iot developers. With geeky you can control development boards directly such as ESP32, ESP8266, RaspberryPi or any boards that supports WiFi or Ethernet via amazing support of [MQTT](http://mqtt.org/).
 
