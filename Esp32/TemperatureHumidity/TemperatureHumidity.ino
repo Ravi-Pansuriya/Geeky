@@ -9,7 +9,6 @@
 
 /* Variable declarations */
 uint64_t dhtTimestamp = 0;
-uint64_t ldrTimestamp = 0;
 
 /* Class object declarations */
 WiFiMulti WiFiMulti;
