@@ -14,11 +14,14 @@
 //#define DHTTYPE DHT21   // DHT 21 (AM2301)
 //#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 
-const char* mqtt_host = "103.250.184.102"; // Geekyworks MQTT broker ip
+// MQTT host/port
+const char* mqtt_host = "iot.geekyworks.com"; // Geekyworks MQTT broker ip
 const int mqtt_port = 8085;
 
-const char* temperatureId = "<device-id>";  // TODO: Change with temperature sensor identifier
-const char* humidityId = "<device-id>"; // TODO: Change with humidity sensor identifier
+// Sensors
+// TODO: Change <sensor-id> with appropriate sensor identifier you careated in dashboard
+const char* temperatureId = "<sensor-id>";  // TODO: Change with temperature sensor identifier
+const char* humidityId = "<sensor-id>"; // TODO: Change with humidity sensor identifier
 
 // Sensor Pins
 const int LED_BUILTIN = 2;
