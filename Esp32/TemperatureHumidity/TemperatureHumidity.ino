@@ -35,8 +35,6 @@ void setup() {
   dht.begin();  // Begin dht reading
 
   WiFi.onEvent(WiFiEvent);
-
-//  WiFiMulti.addAP("Black.Dragon", "Jack.Denial#007");
   WiFiMulti.addAP(MySSID, MyWifiPassword);
   Serial.println();
   Serial.print("Connecting to Wifi: ");
@@ -66,7 +64,6 @@ void setup() {
 void loop() {
   if(WiFiMulti.run() == WL_CONNECTED) {
     uint64_t now = millis();
-
     if((now - dhtTimestamp) > DHT_INTERVAL) {
         dhtTimestamp = now;
         // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)

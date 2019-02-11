@@ -40,8 +40,6 @@ void setup() {
   switches.add(light4, 3);
 
   WiFi.onEvent(WiFiEvent);
-
-//  WiFiMulti.addAP("Black.Dragon", "Jack.Denial#007");
   WiFiMulti.addAP(MySSID, MyWifiPassword);
   Serial.println();
   Serial.print("Connecting to Wifi: ");
