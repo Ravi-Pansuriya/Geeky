@@ -2,7 +2,6 @@
 #include <WiFiMulti.h>
 #include <ArduinoJson.h> // get it from https://arduinojson.org/ or install via Arduino library manager
 #include <StreamString.h>
-#include <DHT.h>
 #include <Shifty.h>
 #include <StringSplitter.h>
 #include <ShiftySwitches.h>
@@ -11,27 +10,21 @@
 #include "Config.h"
 #include "Blinker.h"
 
-/* Variable declarations */
-uint64_t dhtTimestamp = 0;
-uint64_t ldrTimestamp = 0;
-
 /* Class object declarations */
 WiFiMulti WiFiMulti;
 WiFiClient pubClient, subClient;
 MQTTPublisher publisher(pubClient, Username, MyApiKey);
 MQTTSubscriber subscriber(subClient, Username, MyApiKey);
 
-// Initialize DHT sensor.
-DHT dht(DHTPin, DHTTYPE);
-
 ShiftySwitches switches;
+DynamicJsonBuffer jsonBuffer;
 
 Blinker blinker;
 
 /* function declarations */
 void WiFiEvent(WiFiEvent_t event);
 void mqttCallback(String topic, String deviceId, byte* payload, unsigned int length);
-void uploadToServer(const char*, int, float);
+void uploadDeviceToServer(const char*, int, bool);    // To notify update back to server
 
 /* Initialization */
 void setup() {
@@ -39,14 +32,12 @@ void setup() {
   Serial.begin(115200);
 
   delay(10);
-  pinMode(DHTPin, INPUT);
-  dht.begin();  // Begin dht reading
 
   // Add switch ids
   switches.add(light1, 0);
   switches.add(light2, 1);
   switches.add(light3, 2);
-  switches.add(plug1, 3);
+  switches.add(light4, 3);
 
   WiFi.onEvent(WiFiEvent);
 
@@ -90,26 +81,6 @@ void loop() {
     /* this function will listen for incomming 
     subscribed topic-process-invoke receivedCallback */
     subscriber.loop();
-    
-    uint64_t now = millis();
-
-    if((now - dhtTimestamp) > DHT_INTERVAL) {
-        dhtTimestamp = now;
-        // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-        // Read temperature as Celsius (the default)
-        float t = dht.readTemperature();
-        Serial.printf("Temp: %.0f°c\n", t);
-        if (!isnan(t)){
-          uploadToServer(temperatureId, 101, t);
-        }
-        delay(10);
-        // Read humidity
-        float h = dht.readHumidity();
-        Serial.printf("Humidity: %.0f%%\n", h);
-        if (!isnan(h)){
-          uploadToServer(humidityId, 102, h);
-        }
-    }
   }
 }
 
@@ -162,7 +133,6 @@ void mqttCallback(String topic, String deviceId, byte* payload, unsigned int len
   Serial.println("");
   
   // Parse payload buffer
-  DynamicJsonBuffer jsonBuffer;
   JsonObject& json = jsonBuffer.parseObject((char*)payload); 
   String clientId = json["client"];
   if (clientId != publisher.clientId()) {
@@ -181,23 +151,22 @@ void mqttCallback(String topic, String deviceId, byte* payload, unsigned int len
   }
 }
 
-void uploadToServer(const char* _id, int type, float val){
+// Call this function to notify device update to server.
+// if you have implemented push buttons, IR remote ar anything else that invoke device value updates locally.
+// i.e. uploadDeviceToServer(SWITCH_1, 1, true);
+void uploadDeviceToServer(const char* _id, int type, bool val){
   Serial.println("Publishing...");
-  DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
   root["type"] = type;
   root["client"] = publisher.clientId();
   JsonObject& data = root.createNestedObject("data");
-  data["value"] = val;
-  if (type == 101){
-    data["unit"] = "C";
-  }
+  data["power"] = val;
   String jsonString;
   root.printTo(jsonString);
   Serial.println(jsonString);
   // Generate device topic
   String topic = String(TopicIdentifier);
-  topic += "/sensor/";
+  topic += "/devices/";
   topic += _id;
   if(publisher.publish(topic, jsonString)){
     Serial.println("Published successfully..");

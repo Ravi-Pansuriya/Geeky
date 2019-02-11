@@ -9,29 +9,19 @@
 #define MySSID "<ssid>" // TODO: Change to your Wifi network SSID
 #define MyWifiPassword "<password>" // TODO: Change to your Wifi network password
 
-#define DHT_INTERVAL 60000 // Set Min to 1 Minute (60Sec * 1000)
-#define DHTTYPE DHT11   // DHT 11
-//#define DHTTYPE DHT21   // DHT 21 (AM2301)
-//#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
-
-#define SWITCH_1  0
-#define SWITCH_2  1
-#define SWITCH_3  2
-#define SWITCH_4  3
-
-const char* mqtt_host = "103.250.184.102"; // Geekyworks MQTT broker ip
+// MQTT host/port
+const char* mqtt_host = "iot.geekyworks.com"; // Geekyworks MQTT broker
 const int mqtt_port = 8085;
 
+// Devices
+// TODO: Change <switchx-id> with switch identifier you careated in dashboard
 const char* light1 = "<device-id>"; // TODO: Change with switch identifier
 const char* light2 = "<device-id>"; // TODO: Change with switch identifier
 const char* light3 = "<device-id>"; // TODO: Change with switch identifier
-const char* plug1 = "<device-id>"; // TODO: Change with outlet identifier
-const char* temperatureId = "<device-id>";  // TODO: Change with temperature sensor identifier
-const char* humidityId = "<device-id>"; // TODO: Change with humidity sensor identifier
-const char* visibilityId = "<device-id>";
+const char* light4 = "<device-id>"; // TODO: Change with outlet identifier
+
 
 // Sensor Pins
 const int LED_BUILTIN = 2;
-const int DHTPin = 32;
 
 #endif
