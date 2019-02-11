@@ -27,8 +27,9 @@ void setup() {
   Serial.begin(115200);
 
   delay(10);
+  pinMode(LDRPin, INPUT);
+  
   WiFi.onEvent(WiFiEvent);
-
   WiFiMulti.addAP(MySSID, MyWifiPassword);
   Serial.println();
   Serial.print("Connecting to Wifi: ");
